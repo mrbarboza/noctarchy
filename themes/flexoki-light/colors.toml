@@ -1,3 +1,16 @@
-# Flexoki Light - Omarchy Theme
-# Source: omacom/omarchy/themes/flexoki-light
-# TODO: Replace with actual content
+# Flexoki Light - Warm light
+[colors]
+bg_primary = "#faf8f5"
+bg_secondary = "#f2f0ed"
+bg_popup = "#e8e6e3"
+fg_primary = "#1a1814"
+fg_secondary = "#575242"
+border_active = "#205c7a"
+border_inactive = "#d8d6d3"
+red = "#af3029"
+green = "#66800b"
+yellow = "#ad8301"
+blue = "#205c7a"
+purple = "#854d0e"
+cyan = "#1c684f"
+orange = "#bf5013"

@@ -1,3 +1,16 @@
-# Vantablack - Omarchy Theme
-# Source: omacom/omarchy/themes/vantablack
-# TODO: Replace with actual content
+# Vantablack - Pure darkness
+[colors]
+bg_primary = "#000000"
+bg_secondary = "#0a0a0a"
+bg_popup = "#111111"
+fg_primary = "#e0e0e0"
+fg_secondary = "#909090"
+border_active = "#333333"
+border_inactive = "#1a1a1a"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#8be9fd"
+purple = "#bd93f9"
+cyan = "#8be9fd"
+orange = "#ffb86c"

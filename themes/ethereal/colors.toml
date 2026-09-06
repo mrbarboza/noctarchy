@@ -1,3 +1,16 @@
-# Ethereal - Omarchy Theme
-# Source: omacom/omarchy/themes/ethereal
-# TODO: Replace with actual content
+# Ethereal - Airy pastels
+[colors]
+bg_primary = "#1a1c29"
+bg_secondary = "#1f2130"
+bg_popup = "#27293d"
+fg_primary = "#c5c9e0"
+fg_secondary = "#9094b0"
+border_active = "#7aa2f7"
+border_inactive = "#444860"
+red = "#f7768e"
+green = "#9ece6a"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+purple = "#bb9af7"
+cyan = "#7dcfff"
+orange = "#ff9e64"

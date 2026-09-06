@@ -1,3 +1,16 @@
-# Last Horizon - Omarchy Theme
-# Source: omacom/omarchy/themes/last-horizon
-# TODO: Replace with actual content
+# Last Horizon - Sunset gradient
+[colors]
+bg_primary = "#1a1a2e"
+bg_secondary = "#1f1f35"
+bg_popup = "#2a2a40"
+fg_primary = "#d8c8e8"
+fg_secondary = "#a898b8"
+border_active = "#ff7eb9"
+border_inactive = "#4a4a6a"
+red = "#ff7eb9"
+green = "#7af9a8"
+yellow = "#ffeb3b"
+blue = "#7eb9ff"
+purple = "#c898ff"
+cyan = "#7ef9f9"
+orange = "#ffb86c"

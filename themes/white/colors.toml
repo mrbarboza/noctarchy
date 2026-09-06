@@ -1,3 +1,16 @@
-# White - Omarchy Theme
-# Source: omacom/omarchy/themes/white
-# TODO: Replace with actual content
+# White - Clean minimal
+[colors]
+bg_primary = "#ffffff"
+bg_secondary = "#f5f5f5"
+bg_popup = "#eeeeee"
+fg_primary = "#1a1a1a"
+fg_secondary = "#555555"
+border_active = "#cccccc"
+border_inactive = "#e0e0e0"
+red = "#d73a49"
+green = "#28a745"
+yellow = "#dbed03"
+blue = "#0366d6"
+purple = "#6f42c1"
+cyan = "#1b7c83"
+orange = "#fb8532"

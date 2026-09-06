@@ -1,3 +1,16 @@
-# Catppuccin Latte - Omarchy Theme
-# Source: omacom/omarchy/themes/catppuccin-latte
-# TODO: Replace with actual content
+# Catppuccin Latte - Light variant
+[colors]
+bg_primary = "#eff1f5"
+bg_secondary = "#e6e9ef"
+bg_popup = "#ccd0da"
+fg_primary = "#4c4f69"
+fg_secondary = "#6c6f85"
+border_active = "#1e66f5"
+border_inactive = "#bcc0cc"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+purple = "#8839ef"
+cyan = "#179299"
+orange = "#fe640b"

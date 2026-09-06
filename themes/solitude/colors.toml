@@ -1,3 +1,16 @@
-# Solitude - Omarchy Theme
-# Source: omacom/omarchy/themes/solitude
-# TODO: Replace with actual content
+# Solitude - Quiet isolation blues
+[colors]
+bg_primary = "#1a1c23"
+bg_secondary = "#232530"
+bg_popup = "#2d3040"
+fg_primary = "#c5c9d6"
+fg_secondary = "#9da0b0"
+border_active = "#7aa2f7"
+border_inactive = "#444857"
+red = "#f7768e"
+green = "#9ece6a"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+purple = "#ad8ee6"
+cyan = "#449dab"
+orange = "#ff9e64"

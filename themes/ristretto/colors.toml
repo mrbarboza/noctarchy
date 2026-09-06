@@ -1,3 +1,16 @@
-# Ristretto - Omarchy Theme
-# Source: omacom/omarchy/themes/ristretto
-# TODO: Replace with actual content
+# Ristretto - Espresso tones
+[colors]
+bg_primary = "#251f1c"
+bg_secondary = "#2d2522"
+bg_popup = "#382f2b"
+fg_primary = "#e8dfd6"
+fg_secondary = "#b8a89a"
+border_active = "#c49a6c"
+border_inactive = "#524438"
+red = "#d67e5c"
+green = "#9fbc8a"
+yellow = "#e6c57a"
+blue = "#7aa5c4"
+purple = "#c49a6c"
+cyan = "#7ab8a0"
+orange = "#d69e5c"

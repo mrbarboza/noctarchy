@@ -1,3 +1,16 @@
-# Lupine - Omarchy Theme
-# Source: omacom/omarchy/themes/lupine
-# TODO: Replace with actual content
+# Lupine - Purple moonlight
+[colors]
+bg_primary = "#1a1424"
+bg_secondary = "#1f172e"
+bg_popup = "#2b2038"
+fg_primary = "#e8dff5"
+fg_secondary = "#b8a7d6"
+border_active = "#c4a7e7"
+border_inactive = "#44415a"
+red = "#ea9a97"
+green = "#a6e3a1"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+purple = "#c4a7e7"
+cyan = "#ebbcba"
+orange = "#f6c177"

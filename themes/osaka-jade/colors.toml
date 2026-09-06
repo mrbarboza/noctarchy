@@ -1,3 +1,16 @@
-# Osaka Jade - Omarchy Theme
-# Source: omacom/omarchy/themes/osaka-jade
-# TODO: Replace with actual content
+# Osaka Jade - Japanese gemstone
+[colors]
+bg_primary = "#182421"
+bg_secondary = "#1f2f2b"
+bg_popup = "#2a3a35"
+fg_primary = "#c8d6cf"
+fg_secondary = "#9fb0a8"
+border_active = "#7ab8a0"
+border_inactive = "#4a5a55"
+red = "#e67e80"
+green = "#7ab8a0"
+yellow = "#d8c77a"
+blue = "#7fa5b8"
+purple = "#b87fa5"
+cyan = "#7fb8a0"
+orange = "#e6a87e"

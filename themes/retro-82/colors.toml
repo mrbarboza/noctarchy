@@ -1,3 +1,16 @@
-# Retro 82 - Omarchy Theme
-# Source: omacom/omarchy/themes/retro-82
-# TODO: Replace with actual content
+# Retro 82 - 80s neon
+[colors]
+bg_primary = "#1a1a2e"
+bg_secondary = "#16213e"
+bg_popup = "#1f2a40"
+fg_primary = "#ff7096"
+fg_secondary = "#b8a0d6"
+border_active = "#00f5d4"
+border_inactive = "#3a3a5c"
+red = "#ff7096"
+green = "#00f5d4"
+yellow = "#f9ed69"
+blue = "#1598ff"
+purple = "#b8a0d6"
+cyan = "#00f5d4"
+orange = "#ff9500"

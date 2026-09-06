@@ -1,3 +1,16 @@
-# Hackerman - Omarchy Theme
-# Source: omacom/omarchy/themes/hackerman
-# TODO: Replace with actual content
+# Hackerman - Matrix green
+[colors]
+bg_primary = "#0a0f0a"
+bg_secondary = "#0f1710"
+bg_popup = "#152018"
+fg_primary = "#00ff41"
+fg_secondary = "#008f11"
+border_active = "#00ff41"
+border_inactive = "#1a2f1a"
+red = "#ff3333"
+green = "#00ff41"
+yellow = "#f1fa8c"
+blue = "#0099ff"
+purple = "#bd93f9"
+cyan = "#00ffff"
+orange = "#ff79c6"
