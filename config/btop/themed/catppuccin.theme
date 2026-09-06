@@ -1,0 +1,9 @@
+# Catppuccin Mocha Btop theme
+main_bg = "#1e1e2e"
+main_fg = "#cdd6f4"
+main_border = "#89b4fa"
+title = "#89b4fa"
+highlight_red = "#f38ba8"
+highlight_green = "#a6e3a1"
+highlight_yellow = "#f9e2af"
+highlight_blue = "#89b4fa"

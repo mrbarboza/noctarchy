@@ -1,0 +1,9 @@
+# Gruvbox Btop theme
+main_bg = "#282828"
+main_fg = "#ebdbb2"
+main_border = "#fabd2f"
+title = "#fabd2f"
+highlight_red = "#cc241d"
+highlight_green = "#98971a"
+highlight_yellow = "#d79921"
+highlight_blue = "#458588"

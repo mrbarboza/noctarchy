@@ -1,0 +1,9 @@
+# Nord Btop theme
+main_bg = "#2e3440"
+main_fg = "#eceff4"
+main_border = "#88c0d0"
+title = "#88c0d0"
+highlight_red = "#bf616a"
+highlight_green = "#a3be8c"
+highlight_yellow = "#ebcb8b"
+highlight_blue = "#81a1c1"

@@ -1,0 +1,7 @@
+gui:
+  activeBorderColor: ["#88c0d0", "bold"]
+  inactiveBorderColor: ["#4c566a"]
+  searchingActiveBorderColor: ["#ebcb8b", "bold"]
+  selectedLineBgColor: ["#434c5e"]
+  unstagedChangesColor: ["#bf616a"]
+  defaultFgColor: ["#eceff4"]
