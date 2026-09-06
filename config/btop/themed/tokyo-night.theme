@@ -1,0 +1,40 @@
+# Tokyo Night theme for Btop
+# Source: themes/tokyo-night/colors.toml
+
+[colors]
+theme = "Tokyo Night"
+
+# Main colors
+main_bg = "#1a1b26"
+main_fg = "#c0caf5"
+
+# Borders and UI
+border = "#7aa2f7"
+inactive_border = "#3b4261"
+selected = "#33467c"
+
+# CPU
+cpu_low = "#9ece6a"
+cpu_medium = "#e0af68"
+cpu_high = "#ff9e64"
+cpu_critical = "#f7768e"
+
+# Memory
+mem_low = "#7aa2f7"
+mem_medium = "#bb9af7"
+mem_high = "#ff9e64"
+mem_critical = "#f7768e"
+
+# Network
+net_low = "#73daca"
+net_medium = "#7dcfff"
+net_high = "#7aa2f7"
+
+# Processes
+proc_start = "#7aa2f7"
+proc_end = "#bb9af7"
+
+# Misc
+highlight = "#7aa2f7"
+graph_line = "#3b4261"
+graph_bg = "#16161e"

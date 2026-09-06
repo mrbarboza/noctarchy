@@ -1,0 +1,28 @@
+# Tokyo Night theme for Lazygit
+# Source: themes/tokyo-night/colors.toml
+
+gui:
+  authorColors:
+    "*": "#bb9af7"
+  branchColors:
+    "*": "#7aa2f7"
+  activeBorderColor:
+    - "#7aa2f7"
+    - "bold"
+  inactiveBorderColor:
+    - "#3b4261"
+  searchingActiveBorderColor:
+    - "#e0af68"
+    - "bold"
+  optionsTextColor:
+    - "#7aa2f7"
+  selectedLineBgColor:
+    - "#33467c"
+  cherryPickedCommitBgColor:
+    - "#33467c"
+  cherryPickedCommitFgColor:
+    - "#bb9af7"
+  unstagedChangesColor:
+    - "#f7768e"
+  defaultFgColor:
+    - "#c0caf5"

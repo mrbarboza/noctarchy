@@ -1,7 +1,7 @@
-# Starship prompt config (from Omarchy)
-# Zero DHH/HEY references
+# Tokyo Night theme for Starship prompt
+# Source: themes/tokyo-night/colors.toml
 
-format = """
+format = """\
 $username\
 $hostname\
 $directory\
@@ -9,81 +9,69 @@ $git_branch\
 $git_status\
 $fill\
 $nodejs\
+$python\
 $rust\
 $golang\
-$python\
-$character
+$docker_context\
+$time\
+$line_break\
+$character\
 """
 
-right_format = """$time"""
+# Colors
+[palette]
+success = "#9ece6a"
+error = "#f7768e"
+warning = "#e0af68"
+info = "#7aa2f7"
+purple = "#bb9af7"
+cyan = "#7dcfff"
+yellow = "#e0af68"
+red = "#f7768e"
+green = "#9ece6a"
+blue = "#7aa2f7"
+white = "#c0caf5"
+gray = "#565f89"
 
-[fill]
-symbol = " "
-
+# Modules
 [username]
-style_user = "white bold"
-style_root = "black bold"
-format = "[$user]($style) "
+style_user = "green bold"
+style_root = "red bold"
+format = "[\$user](bold green)@"
 disabled = false
-show_always = true
 
 [hostname]
 ssh_only = false
-ssh_symbol = "\ue7a2 "
-format = "at [$hostname]($style) "
-trim_at = "."
-disable = false
-
-[directory]
-style = "blue bold"
-format = "[\uea83 ]($style)[$path]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
-
-[git_branch]
-symbol = "\ue725 "
-style = "purple bold"
-format = "[on ]($style)[$symbol$branch]($style)"
-
-[git_status]
-style = "red bold"
-format = "[$all_status$ahead_behind]($style) "
-
-[nodejs]
-symbol = "\ue718 "
-style = "green bold"
-format = "[\ue718 ]($style)[$version]($style)"
-detect_files = ["package.json", ".node-version"]
-detect_folders = ["node_modules"]
-
-[rust]
-symbol = "\ue7a8 "
-style = "orange bold"
-format = "[\ue7a8 ]($style)[$version]($style)"
-detect_files = ["Cargo.toml"]
-detect_folders = ["src"]
-
-[golang]
-symbol = "\ue626 "
-style = "blue bold"
-format = "[\ue626 ]($style)[$version]($style)"
-detect_files = ["go.mod"]
-detect_folders = ["cmd", "internal"]
-
-[python]
-symbol = "\ue235 "
-style = "yellow bold"
-format = "[\ue235 ]($style)[$version]($style)"
-detect_files = ["requirements.txt", "pyproject.toml"]
-detect_folders = ["venv", ".venv"]
-
-[time]
-style = "bold white"
-format = "[\uf017 $time]($style) "
-time_format = "%H:%M"
+format = "[$hostname](bold cyan) "
 disabled = false
 
+[directory]
+read_only = " ro"
+truncation_length = 4
+truncation_symbol = "…/"
+style = "bold blue"
+format = "[\$path ]($style)"
+
+[git_branch]
+symbol = " "
+format = "[\$symbol](purple) [\$branch ](bold purple)"
+style = "bold purple"
+
+[git_status]
+format = "[\([$all_status$ahead_behind\]) ](bold red)"
+style = "bold red"
+
+[fill]
+symbol = " "
+style = "gray"
+
+[time]
+disabled = false
+time_format = "%R"
+format = "[\$time](dimmed yellow)"
+style = "bold yellow"
+
 [character]
-success_symbol = "[➜](bold green) "
-error_symbol = "[➜](bold red) "
-vicmd_symbol = "[N](bold yellow) "
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+vicmd_symbol = "[❮](bold purple)"
