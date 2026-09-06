@@ -1,0 +1,55 @@
+# Catppuccin Mocha theme for Noctalia
+# Synced from Omarchy (zero DHH/HEY references)
+
+[colors]
+# Base colors
+bg = "#1e1e2e"
+fg = "#cdd6f4"
+
+# Black
+black = "#45475a"
+black_bright = "#585b70"
+
+# Red
+red = "#f38ba8"
+red_bright = "#f38ba8"
+
+# Green
+green = "#a6e3a1"
+green_bright = "#a6e3a1"
+
+# Yellow
+yellow = "#f9e2af"
+yellow_bright = "#f9e2af"
+
+# Blue
+blue = "#89b4fa"
+blue_bright = "#89b4fa"
+
+# Magenta
+magenta = "#f5c2e7"
+magenta_bright = "#f5c2e7"
+
+# Cyan
+cyan = "#94e2d5"
+cyan_bright = "#94e2d5"
+
+# White
+white = "#bac2de"
+white_bright = "#a6adc8"
+
+# Accents
+accent = "#89b4fa"
+accent_fg = "#1e1e2e"
+
+# Status
+info = "#89b4fa"
+warn = "#f9e2af"
+error = "#f38ba8"
+success = "#a6e3a1"
+
+# UI
+border = "#45475a"
+panel = "#313244"
+hover = "#45475a"
+selected = "#585b70"
