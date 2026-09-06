@@ -1,0 +1,76 @@
+# ~/.config/noctalia/config.toml
+# Noctarchy — Noctalia config (zero DHH/HEY references)
+
+[shell]
+niri_overview_type_to_launch_enabled = true
+
+[bar]
+enabled = true
+position = "top"
+height = 42
+margin = 0
+
+[bar.workspace]
+show-all = false
+scroll-to-focus = true
+
+[bar.clock]
+enabled = true
+format = "%H:%M"
+show-seconds = false
+
+[bar.battery]
+enabled = true
+
+[bar.network]
+enabled = true
+
+[bar.volume]
+enabled = true
+
+[bar.tray]
+enabled = true
+
+[bar.media]
+enabled = true
+
+[bar.clipboard]
+enabled = true
+
+[launcher]
+enabled = true
+keybind = "Mod+Space"
+position = "center"
+width = 600
+height = 500
+
+[notifications]
+enabled = true
+position = "top-right"
+max-visible = 3
+history-size = 50
+
+[wallpaper]
+enabled = true
+path = "/usr/share/backgrounds/default.jpg"
+
+[lockscreen]
+enabled = true
+lock_before_suspend = true
+
+[dock]
+enabled = false
+
+[widgets.desktop]
+enabled = false
+
+[osd]
+enabled = true
+position = "center"
+
+[clipboard]
+history-size = 100
+sync-primary = true
+
+[power]
+lock_before_suspend = true
