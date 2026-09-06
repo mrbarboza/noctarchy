@@ -1,0 +1,89 @@
+# Starship prompt config (from Omarchy)
+# Zero DHH/HEY references
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$nodejs\
+$rust\
+$golang\
+$python\
+$character
+"""
+
+right_format = """$time"""
+
+[fill]
+symbol = " "
+
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "[$user]($style) "
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+ssh_symbol = "\ue7a2 "
+format = "at [$hostname]($style) "
+trim_at = "."
+disable = false
+
+[directory]
+style = "blue bold"
+format = "[\uea83 ]($style)[$path]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = "\ue725 "
+style = "purple bold"
+format = "[on ]($style)[$symbol$branch]($style)"
+
+[git_status]
+style = "red bold"
+format = "[$all_status$ahead_behind]($style) "
+
+[nodejs]
+symbol = "\ue718 "
+style = "green bold"
+format = "[\ue718 ]($style)[$version]($style)"
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+
+[rust]
+symbol = "\ue7a8 "
+style = "orange bold"
+format = "[\ue7a8 ]($style)[$version]($style)"
+detect_files = ["Cargo.toml"]
+detect_folders = ["src"]
+
+[golang]
+symbol = "\ue626 "
+style = "blue bold"
+format = "[\ue626 ]($style)[$version]($style)"
+detect_files = ["go.mod"]
+detect_folders = ["cmd", "internal"]
+
+[python]
+symbol = "\ue235 "
+style = "yellow bold"
+format = "[\ue235 ]($style)[$version]($style)"
+detect_files = ["requirements.txt", "pyproject.toml"]
+detect_folders = ["venv", ".venv"]
+
+[time]
+style = "bold white"
+format = "[\uf017 $time]($style) "
+time_format = "%H:%M"
+disabled = false
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
+vicmd_symbol = "[N](bold yellow) "

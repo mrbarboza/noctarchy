@@ -1,0 +1,50 @@
+[user]
+	name = Miguel Barboza
+	email = your.email@example.com
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = nvim
+	pager = less -F
+
+[push]
+	autoSetupRemote = true
+
+[pull]
+	rebase = true
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	features = decorations
+
+[delta "decorations"]
+	commit-decoration-style = "bold yellow box ul"
+	file-style = "bold blue"
+	file-decoration-style = "blue ul"
+
+[credential]
+	helper = store
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	lg = log --oneline --graph --decorate
+	df = diff
+	dc = diff --cached
+	last = log -1 HEAD
+
+[init]
+	templateDir = ~/.git-templates

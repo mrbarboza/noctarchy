@@ -1,0 +1,76 @@
+# Lazygit config (from Omarchy)
+# Zero DHH/HEY references
+
+gui:
+  # Theme
+  theme:
+    activeBorderColor:
+      - "#89b4fa"
+      - bold
+    inactiveBorderColor:
+      - "#45475a"
+    optionsTextColor:
+      - "#89b4fa"
+    selectedLineBgColor:
+      - "#313244"
+    cherryPickedCommitBgColor:
+      - "#45475a"
+    cherryPickedCommitFgColor:
+      - "#f5c2e7"
+    unstagedChangesColor:
+      - "#f38ba8"
+    defaultFgColor:
+      - "#cdd6f4"
+    searchingActiveBorderColor:
+      - "#f9e2af"
+
+  # Layout
+  windowSize: normal
+  border: single
+
+  # Commit length
+  commitLength:
+    show: true
+
+  # Mouse
+  mouseEvents:
+    enabled: true
+
+  # Skip
+  skipUnstageLineWarning: true
+  skipStashWarning: true
+
+# Git
+os:
+  editCommand: "nvim"
+  editCommandTemplate: "nvim {{filename}}"
+
+# Keybindings
+keybinding:
+  universal:
+    quit: q
+    quit-alt1: <c-c>
+    return: <esc>
+    quitWithoutChangingDirectory: Q
+    togglePanel: <tab>
+    prevItem: <up>
+    nextItem: <down>
+    prevItem-alt: k
+    nextItem-alt: j
+    prevPage: ','
+    nextPage: .
+    scrollLeft: H
+    scrollRight: L
+    gotoTop: <
+    gotoBottom: '>'
+    toggleRangeSelect: v
+    rangeSelectDown: <s-down>
+    rangeSelectUp: <s-up>
+    prevBlock: <left>
+    nextBlock: <right>
+    prevBlock-alt: h
+    nextBlock-alt: l
+    jumpToBlock: ['1', '2', '3', '4', '5']
+    nextMatch: 'n'
+    prevMatch: 'N'
+    startSearch: /
