@@ -1,0 +1,5 @@
+# Solitude lock screen
+[colors]
+background = "#1a1c23"
+foreground = "#c5c9d6"
+accent = "#7aa2f7"

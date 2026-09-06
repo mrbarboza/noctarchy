@@ -1,0 +1,5 @@
+# Lupine lock screen
+[colors]
+background = "#1a1424"
+foreground = "#e8dff5"
+accent = "#c4a7e7"

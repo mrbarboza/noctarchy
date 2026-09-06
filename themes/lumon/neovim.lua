@@ -1,1 +1,10 @@
--- Neovim theme config
+-- Lumon (Severance) for Neovim
+return {
+  "projekt0n/github-nvim-theme",
+  name = "github-theme",
+  lazy = false,
+  priority = 1000,
+  opts = {
+    style = "dark",
+  },
+}

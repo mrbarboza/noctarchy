@@ -1,0 +1,5 @@
+# Lumon lock screen
+[colors]
+background = "#1a1a2e"
+foreground = "#e94560"
+accent = "#e94560"
