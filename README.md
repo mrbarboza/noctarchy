@@ -1,14 +1,12 @@
 # Noctarchy
 
-**Niri + Noctalia** desktop configuration inspired by Omarchy — **zero DHH/37signals/HEY references**.
+**Niri + Noctalia** desktop configuration inspired by Omarchy
 
 ## What is this?
 
 A clean, opinionated Wayland desktop setup using:
 - **Niri** — Scrollable-tiling Wayland compositor (Rust)
 - **Noctalia** — Modern desktop shell (bar, launcher, notifications, lockscreen)
-
-No Hyprland, no Quickshell, no Basecamp/HEY/37signals content.
 
 ## Quick start
 
