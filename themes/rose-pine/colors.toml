@@ -1,3 +1,16 @@
-# Rose Pine - Omarchy Theme
-# Source: omacom/omarchy/themes/rose-pine
-# TODO: Replace with actual content
+# Rose Pine - Warm rose tones
+[colors]
+bg_primary = "#191724"
+bg_secondary = "#16141f"
+bg_popup = "#26233a"
+fg_primary = "#e0def4"
+fg_secondary = "#908caa"
+border_active = "#c4a7e7"
+border_inactive = "#44415a"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+purple = "#c4a7e7"
+cyan = "#ebbcba"
+orange = "#f6c177"

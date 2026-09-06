@@ -1,3 +1,16 @@
-# Everforest - Omarchy Theme
-# Source: omacom/omarchy/themes/everforest
-# TODO: Replace with actual content
+# Everforest - Natural forest tones
+[colors]
+bg_primary = "#2d353b"
+bg_secondary = "#272e33"
+bg_popup = "#374046"
+fg_primary = "#d3c6aa"
+fg_secondary = "#c5b9a1"
+border_active = "#a7c080"
+border_inactive = "#5c6870"
+red = "#e67e80"
+green = "#a7c080"
+yellow = "#dbbc7f"
+blue = "#7fbbb3"
+purple = "#d699b6"
+cyan = "#83c092"
+orange = "#e69875"

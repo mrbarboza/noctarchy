@@ -1,3 +1,16 @@
-# Kanagawa - Omarchy Theme
-# Source: omacom/omarchy/themes/kanagawa
-# TODO: Replace with actual content
+# Kanagawa - Japanese ink colors
+[colors]
+bg_primary = "#16161d"
+bg_secondary = "#121217"
+bg_popup = "#22222b"
+fg_primary = "#dcd7ba"
+fg_secondary = "#c8c093"
+border_active = "#7aa89f"
+border_inactive = "#444550"
+red = "#c34043"
+green = "#76946a"
+yellow = "#c0a36e"
+blue = "#7e9cd8"
+purple = "#957fb8"
+cyan = "#6a9589"
+orange = "#ffa066"

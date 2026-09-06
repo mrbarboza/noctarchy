@@ -1,3 +1,16 @@
-# Matte Black - Omarchy Theme
-# Source: omacom/omarchy/themes/matte-black
-# TODO: Replace with actual content
+# Matte Black - Minimal monochrome
+[colors]
+bg_primary = "#0a0a0a"
+bg_secondary = "#111111"
+bg_popup = "#1a1a1a"
+fg_primary = "#e0e0e0"
+fg_secondary = "#909090"
+border_active = "#404040"
+border_inactive = "#252525"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#8be9fd"
+purple = "#bd93f9"
+cyan = "#8be9fd"
+orange = "#ffb86c"

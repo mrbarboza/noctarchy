@@ -1,38 +1,16 @@
-# Tokyo Night Theme for Noctarchy (Niri)
-# Inspired by official Omarchy Tokyo Night theme
-# Source: omacom/omarchy/themes/tokyo-night
-
+# Tokyo Night - Deep night city blues
 [colors]
-# Background colors
 bg_primary = "#1a1b26"
 bg_secondary = "#16161e"
 bg_popup = "#24283b"
-bg_statusbar = "#1f2335"
-
-# Foreground colors
 fg_primary = "#c0caf5"
 fg_secondary = "#a9b1d6"
-fg_gutter = "#3b4261"
-
-# Accent colors
-blue = "#7aa2f7"
-blue_alt = "#7dcfff"
-purple = "#bb9af7"
-purple_alt = "#9d7cd8"
-green = "#9ece6a"
-green_alt = "#73daca"
-red = "#f7768e"
-red_alt = "#ff7a93"
-orange = "#ff9e64"
-yellow = "#e0af68"
-cyan = "#7dcfff"
-teal = "#73daca"
-
-# UI colors
 border_active = "#7aa2f7"
 border_inactive = "#3b4261"
-selection = "#33467c"
-error = "#f7768e"
-warning = "#e0af68"
-success = "#9ece6a"
-info = "#7aa2f7"
+blue = "#7aa2f7"
+purple = "#bb9af7"
+green = "#9ece6a"
+red = "#f7768e"
+yellow = "#e0af68"
+cyan = "#7dcfff"
+orange = "#ff9e64"

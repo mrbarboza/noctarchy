@@ -1,3 +1,16 @@
-# Lumon - Omarchy Theme
-# Source: omacom/omarchy/themes/lumon
-# TODO: Replace with actual content
+# Lumon - Corporate sterile
+[colors]
+bg_primary = "#1a1a2e"
+bg_secondary = "#16213e"
+bg_popup = "#0f3460"
+fg_primary = "#e94560"
+fg_secondary = "#a0a0a0"
+border_active = "#e94560"
+border_inactive = "#0f3460"
+red = "#e94560"
+green = "#00adb5"
+yellow = "#ffdd00"
+blue = "#0099ff"
+purple = "#9d4edd"
+cyan = "#00adb5"
+orange = "#ff9500"

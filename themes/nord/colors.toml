@@ -1,3 +1,16 @@
-# Nord - Omarchy Theme
-# Source: omacom/omarchy/themes/nord
-# TODO: Replace with actual content
+# Nord - Cool arctic colors
+[colors]
+bg_primary = "#2e3440"
+bg_secondary = "#242933"
+bg_popup = "#3b4252"
+fg_primary = "#eceff4"
+fg_secondary = "#e5e9f0"
+border_active = "#88c0d0"
+border_inactive = "#4c566a"
+red = "#bf616a"
+green = "#a3be8c"
+yellow = "#ebcb8b"
+blue = "#81a1c1"
+purple = "#b48ead"
+cyan = "#88c0d0"
+orange = "#d08770"
