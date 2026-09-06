@@ -1,17 +1,5 @@
-# Tokyo Night lock screen configuration
-
+# Tokyo Night lock screen
 [colors]
 background = "#1a1b26"
 foreground = "#c0caf5"
 accent = "#7aa2f7"
-
-[layout]
-time_format = "%H:%M"
-date_format = "%A, %B %d"
-font = "JetBrainsMono NF"
-time_size = 96
-date_size = 24
-
-[effects]
-blur = true
-shadow = true

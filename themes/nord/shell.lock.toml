@@ -1,0 +1,5 @@
+# Nord lock screen
+[colors]
+background = "#2e3440"
+foreground = "#eceff4"
+accent = "#88c0d0"

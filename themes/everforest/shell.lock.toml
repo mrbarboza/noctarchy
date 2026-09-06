@@ -1,0 +1,5 @@
+# Everforest lock screen
+[colors]
+background = "#2d353b"
+foreground = "#d3c6aa"
+accent = "#a7c080"

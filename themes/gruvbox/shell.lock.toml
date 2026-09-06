@@ -1,0 +1,5 @@
+# Gruvbox lock screen
+[colors]
+background = "#282828"
+foreground = "#ebdbb2"
+accent = "#fabd2f"
