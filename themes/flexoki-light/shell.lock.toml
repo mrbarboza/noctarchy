@@ -1,0 +1,5 @@
+# Flexoki Light lock screen
+[colors]
+background = "#faf8f5"
+foreground = "#1a1814"
+accent = "#205c7a"

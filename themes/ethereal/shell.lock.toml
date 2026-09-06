@@ -1,0 +1,5 @@
+# Ethereal lock screen
+[colors]
+background = "#1a1c29"
+foreground = "#c5c9e0"
+accent = "#7aa2f7"

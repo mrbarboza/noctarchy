@@ -1,0 +1,5 @@
+# Catppuccin Latte lock screen
+[colors]
+background = "#eff1f5"
+foreground = "#4c4f69"
+accent = "#1e66f5"

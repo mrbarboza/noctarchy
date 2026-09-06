@@ -1,0 +1,5 @@
+# Ristretto lock screen
+[colors]
+background = "#251f1c"
+foreground = "#e8dfd6"
+accent = "#c49a6c"

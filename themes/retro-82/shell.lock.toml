@@ -1,0 +1,5 @@
+# Retro 82 lock screen
+[colors]
+background = "#1a1a2e"
+foreground = "#ff7096"
+accent = "#00f5d4"

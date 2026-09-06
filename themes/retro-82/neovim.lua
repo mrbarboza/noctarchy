@@ -1,1 +1,9 @@
--- Neovim theme config
+-- Retro 82 for Neovim
+return {
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {
+    style = "night",
+  },
+}

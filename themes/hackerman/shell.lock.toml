@@ -1,0 +1,5 @@
+# Hackerman lock screen
+[colors]
+background = "#0a0f0a"
+foreground = "#00ff41"
+accent = "#00ff41"

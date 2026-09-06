@@ -1,0 +1,5 @@
+# White lock screen
+[colors]
+background = "#ffffff"
+foreground = "#1a1a1a"
+accent = "#0366d6"
