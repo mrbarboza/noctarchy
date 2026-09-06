@@ -1,0 +1,34 @@
+# Rose Pine Moon
+# A cooler, moonlit variant of Rose Pine
+
+[background]
+base = "#232136"
+surface = "#2a273f"
+overlay = "#393552"
+
+[foreground]
+base = "#e0def4"
+subtle = "#908caa"
+muted = "#6e6a86"
+
+[accent]
+primary = "#c4a7e7"
+secondary = "#ebbcba"
+tertiary = "#9ccfd8"
+
+[colors]
+red = "#eb6f92"
+green = "#3e8fb0"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ea9a97"
+white = "#e0def4"
+black = "#232136"
+
+[ui]
+text = "#e0def4"
+hint = "#908caa"
+error = "#eb6f92"
+border = "#393552"
+panel = "#2a273f"
