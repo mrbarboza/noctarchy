@@ -6,6 +6,7 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 THEME_DIR="$REPO_ROOT/themes/$THEME"
 NOCTALIA_THEME="$REPO_ROOT/config/noctalia/theme.toml"
 NIRI_COLORS="$REPO_ROOT/config/niri/theme-colors.kdl"
+COLORS_TOML="$THEME_DIR/colors.toml"
 
 if [[ -z "$THEME" ]]; then
   echo "Usage: theme-select <theme-name>"
@@ -19,97 +20,22 @@ if [[ ! -d "$THEME_DIR" ]]; then
   exit 1
 fi
 
-# Write Noctalia theme config
 cat > "$NOCTALIA_THEME" <<EOF
 # Selected theme
-# Changed via: bin/theme-select <name>
 name = "$THEME"
 EOF
 
-# Generate Niri colors from theme definitions
-case "$THEME" in
-  tokyo-night)
-    cat > "$NIRI_COLORS" <<'KDL'
-// Auto-generated theme colors for Niri (Tokyo Night)
-color bg_primary "#1a1b26"
-color bg_secondary "#16161e"
-color fg_primary "#c0caf5"
-color border_active "#7aa2f7"
-color border_inactive "#3b4261"
-color accent_blue "#7aa2f7"
-color accent_purple "#bb9af7"
-color accent_green "#9ece6a"
-color accent_red "#f7768e"
-color accent_yellow "#e0af68"
-color accent_cyan "#7dcfff"
-KDL
-    ;;
-  gruvbox)
-    cat > "$NIRI_COLORS" <<'KDL'
-// Auto-generated theme colors for Niri (Gruvbox)
-color bg_primary "#282828"
-color bg_secondary "#1d2021"
-color fg_primary "#ebdbb2"
-color border_active "#fabd2f"
-color border_inactive "#665c54"
-color accent_blue "#458588"
-color accent_purple "#b16286"
-color accent_green "#98971a"
-color accent_red "#cc241d"
-color accent_yellow "#d79921"
-color accent_cyan "#689d6a"
-KDL
-    ;;
-  nord)
-    cat > "$NIRI_COLORS" <<'KDL'
-// Auto-generated theme colors for Niri (Nord)
-color bg_primary "#2e3440"
-color bg_secondary "#242933"
-color fg_primary "#eceff4"
-color border_active "#88c0d0"
-color border_inactive "#4c566a"
-color accent_blue "#81a1c1"
-color accent_purple "#b48ead"
-color accent_green "#a3be8c"
-color accent_red "#bf616a"
-color accent_yellow "#ebcb8b"
-color accent_cyan "#88c0d0"
-KDL
-    ;;
-  catppuccin)
-    cat > "$NIRI_COLORS" <<'KDL'
-// Auto-generated theme colors for Niri (Catppuccin Mocha)
-color bg_primary "#1e1e2e"
-color bg_secondary "#181825"
-color fg_primary "#cdd6f4"
-color border_active "#89b4fa"
-color border_inactive "#585b70"
-color accent_blue "#89b4fa"
-color accent_purple "#cba6f7"
-color accent_green "#a6e3a1"
-color accent_red "#f38ba8"
-color accent_yellow "#f9e2af"
-color accent_cyan "#94e2d5"
-KDL
-    ;;
-  *)
-    echo "No Niri colors defined for theme '$THEME' yet."
-    echo "Using Tokyo Night as fallback."
-    cat > "$NIRI_COLORS" <<'KDL'
-// Fallback: Tokyo Night colors
-color bg_primary "#1a1b26"
-color bg_secondary "#16161e"
-color fg_primary "#c0caf5"
-color border_active "#7aa2f7"
-color border_inactive "#3b4261"
-color accent_blue "#7aa2f7"
-color accent_purple "#bb9af7"
-color accent_green "#9ece6a"
-color accent_red "#f7768e"
-color accent_yellow "#e0af68"
-color accent_cyan "#7dcfff"
-KDL
-    ;;
-esac
-
-echo "Theme switched to: $THEME"
+if [[ -f "$COLORS_TOML" ]]; then
+  echo "// Auto-generated: themes/$THEME/colors.toml" > "$NIRI_COLORS"
+  while IFS='=' read -r key value; do
+    [[ "$key" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "$key" ]] && continue
+    key=$(echo "$key" | xargs)
+    value=$(echo "$value" | sed 's/"//g' | xargs)
+    [[ "$key" =~ ^\[ ]] && continue
+    echo "color $key \"$value\"" >> "$NIRI_COLORS"
+  done < "$COLORS_TOML"
+  echo "Theme: $THEME"
+else
+  echo "Warning: No colors.toml for $THEME"
+fi
