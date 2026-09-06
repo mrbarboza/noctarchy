@@ -1,0 +1,9 @@
+# Rose Pine Btop theme
+main_bg = "#191724"
+main_fg = "#e0def4"
+main_border = "#c4a7e7"
+title = "#c4a7e7"
+highlight_red = "#eb6f92"
+highlight_green = "#31748f"
+highlight_yellow = "#f6c177"
+highlight_blue = "#9ccfd8"
