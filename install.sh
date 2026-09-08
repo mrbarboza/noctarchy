@@ -242,7 +242,22 @@ else
     fi
 fi
 
-# Step 10: Copy scripts directory
+# Step 10: Install Chromium Wayland flags
+echo
+echo "Installing Chromium Wayland flags..."
+CHROMIUM_FLAGS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/chromium-flags.conf"
+if [[ "$DRY_RUN" == true ]]; then
+    echo "   Would copy: config/chromium-flags.conf → $CHROMIUM_FLAGS_FILE"
+else
+    if [[ "$FORCE" == true ]] || [[ ! -f "$CHROMIUM_FLAGS_FILE" ]]; then
+        cp "$REPO_ROOT/config/chromium-flags.conf" "$CHROMIUM_FLAGS_FILE"
+        success "Installed chromium-flags.conf"
+    else
+        warn "chromium-flags.conf already exists (use --force to overwrite)"
+    fi
+fi
+
+# Step 11: Copy scripts directory
 echo
 echo "Copying utility scripts..."
 if [[ "$DRY_RUN" == true ]]; then
@@ -256,7 +271,7 @@ else
     fi
 fi
 
-# Step 10: Install fcitx5 input method config (inert unless fcitx5 is installed)
+# Step 12: Install fcitx5 input method config (inert unless fcitx5 is installed)
 echo
 echo "Installing fcitx5 input method config..."
 XDG_CONFIG_HOME_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
