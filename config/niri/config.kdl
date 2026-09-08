@@ -5,3 +5,70 @@
 // docs/THEMES.md for the exact keys.
 
 // Add your existing Niri config below this line
+
+// Keybindings, ported from Omarchy's Hyprland bindings where a niri-native
+// equivalent exists (see docs/MIGRATION.md and the parity survey). "Mod" is
+// Super on a real TTY session. Syntax verified against niri's own shipped
+// resources/default-config.kdl (https://github.com/YaLTeR/niri) - no "bind"
+// keyword, no quotes around the key combo, action goes inside braces.
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+binds {
+    // Core app launchers
+    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+B hotkey-overlay-title="Open a Browser: firefox" { spawn "firefox"; }
+    Mod+E hotkey-overlay-title="Open an Editor: nvim" { spawn "kitty" "-e" "nvim"; }
+    Mod+Shift+E hotkey-overlay-title="Open a File Manager: nautilus" { spawn "nautilus"; }
+
+    // Window / column focus
+    Mod+Left  { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up    { focus-window-up; }
+    Mod+Down  { focus-window-down; }
+
+    // Move column across workspaces (numbered)
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // Fullscreen / maximize - single-key semantics: Mod+F maximizes the
+    // column (keeps other columns reachable), Mod+Shift+F goes fullscreen.
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+
+    // Overview
+    Mod+Tab repeat=false { toggle-overview; }
+
+    // Close window
+    Mod+Q { close-window; }
+
+    // Media / hardware keys - mirrors niri's own shipped default pattern
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+    // Screenshots - native niri actions, no scripts needed
+    Print       { screenshot-screen; }
+    Ctrl+Print  { screenshot; }
+    Alt+Print   { screenshot-window; }
+}
