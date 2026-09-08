@@ -108,8 +108,9 @@ noctarchy/
 │   │   ├── config.toml      # Noctalia config - installs to ~/.config/noctalia/
 │   │   ├── theme.toml       # Default theme setting
 │   │   └── themed/          # Pre-generated theme configs
-│   └── wireplumber/
-│       └── wireplumber.conf.d/  # WirePlumber config - installs to ~/.config/wireplumber/
+│   ├── wireplumber/
+│   │   └── wireplumber.conf.d/  # WirePlumber config - installs to ~/.config/wireplumber/
+│   └── fcitx5/              # Input method config (inert unless fcitx5 is installed)
 ├── themes/
 │   └── <theme-name>/
 │       ├── colors.toml      # Full color palette

@@ -293,7 +293,7 @@ else
     if [[ "$FORCE" == true ]] || [[ ! -f "$HOME/.XCompose" ]]; then
         cp "$REPO_ROOT/config/fcitx5/xcompose" "$HOME/.XCompose"
     else
-        warn "~/.XCompose already exists (use --force to overwrite)"
+        warn "$HOME/.XCompose already exists (use --force to overwrite)"
     fi
     success "Installed fcitx5 config"
 
