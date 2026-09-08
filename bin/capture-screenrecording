@@ -1,0 +1,174 @@
+#!/bin/bash
+#
+# Start or stop screen recording via gpu-screen-recorder, using its
+# xdg-desktop-portal backend for capture-target selection (monitor/window/
+# region), so this works under any Wayland compositor implementing the
+# ScreenCast portal - including niri, which has no Hyprland-style IPC for
+# monitor/window enumeration.
+#
+# Ported from Omarchy's bin/omarchy-capture-screenrecording. That script
+# defaulted to a Hyprland-specific slurp+hyprctl picker and only offered the
+# portal backend as an opt-in fallback (OMARCHY_SCREENRECORD_USE_PORTAL); here
+# the portal is the only path, so there is no toggle and no --fullscreen
+# fast-path (the portal's own picker covers "capture this whole screen").
+# Its optional webcam-overlay feature (mpv + hyprctl window-map wait) is not
+# ported - it depended on Omarchy helper scripts and hyprctl this repo has no
+# equivalent for.
+#
+# Usage: capture-screenrecording [--with-desktop-audio] [--with-microphone-audio]
+#                                 [--resolution=<WxH>] [--stop-recording]
+#
+# Env: CAPTURE_SCREENRECORD_DEBUG=true appends gpu-screen-recorder's stderr to
+# /tmp/capture-screenrecord.log so you can attach a log when reporting capture
+# failures.
+
+# shellcheck source=/dev/null
+[[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
+OUTPUT_DIR="${CAPTURE_SCREENRECORD_DIR:-${XDG_VIDEOS_DIR:-$HOME/Videos}}"
+
+notify() {
+    command -v notify-send &>/dev/null && notify-send "$@"
+}
+
+if [[ ! -d $OUTPUT_DIR ]]; then
+    notify -u critical -t 3000 "Screen recording directory does not exist: $OUTPUT_DIR"
+    exit 1
+fi
+
+DESKTOP_AUDIO="false"
+MICROPHONE_AUDIO="false"
+RESOLUTION=""
+STOP_RECORDING="false"
+RECORDING_FILE="/tmp/capture-screenrecord-filename"
+LOG_FILE=$([[ ${CAPTURE_SCREENRECORD_DEBUG:-false} == "true" ]] && echo "/tmp/capture-screenrecord.log" || echo "/dev/null")
+
+for arg in "$@"; do
+    case "$arg" in
+    --with-desktop-audio) DESKTOP_AUDIO="true" ;;
+    --with-microphone-audio) MICROPHONE_AUDIO="true" ;;
+    --resolution=*) RESOLUTION="${arg#*=}" ;;
+    --stop-recording) STOP_RECORDING="true" ;;
+    esac
+done
+
+# Downscale a >4K focused output to keep file size sane; anything else records
+# at native resolution ("0x0" tells gpu-screen-recorder not to scale).
+default_resolution() {
+    local width height
+    read -r width height < <(niri msg --json focused-output 2>/dev/null | jq -r '.logical | "\(.width) \(.height)"' 2>/dev/null)
+    if [[ -n $width && -n $height ]] && ((width > 3840 || height > 2160)); then
+        echo "3840x2160"
+    else
+        echo "0x0"
+    fi
+}
+
+start_screenrecording() {
+    local filename
+    filename="$OUTPUT_DIR/screenrecording-$(date +'%Y-%m-%d_%H-%M-%S').mp4"
+    local audio_devices=""
+    local audio_args=()
+
+    [[ $DESKTOP_AUDIO == "true" ]] && audio_devices+="default_output"
+
+    if [[ $MICROPHONE_AUDIO == "true" ]]; then
+        # Merge audio tracks into one - separate tracks only play one at a time in most players
+        [[ -n $audio_devices ]] && audio_devices+="|"
+        audio_devices+="default_input"
+    fi
+
+    [[ -n $audio_devices ]] && audio_args+=(-a "$audio_devices" -ac aac)
+
+    echo "===== $(date '+%F %T') starting: $filename =====" >>"$LOG_FILE"
+    gpu-screen-recorder -w portal -s "${RESOLUTION:-$(default_resolution)}" \
+        -k auto -f 60 -fm cfr -fallback-cpu-encoding yes -o "$filename" "${audio_args[@]}" 2>>"$LOG_FILE" &
+    local pid=$!
+
+    while kill -0 $pid 2>/dev/null && [[ ! -f $filename ]]; do
+        sleep 0.2
+    done
+
+    if kill -0 $pid 2>/dev/null; then
+        echo "$filename" >"$RECORDING_FILE"
+    fi
+}
+
+stop_screenrecording() {
+    pkill -SIGINT -f "^gpu-screen-recorder" # SIGINT required to save video properly
+
+    # Wait a maximum of 5 seconds to finish before hard killing
+    local count=0
+    while pgrep -f "^gpu-screen-recorder" >/dev/null && ((count < 50)); do
+        sleep 0.1
+        count=$((count + 1))
+    done
+
+    if pgrep -f "^gpu-screen-recorder" >/dev/null; then
+        pkill -9 -f "^gpu-screen-recorder"
+        notify -u critical -t 5000 "Screen recording error" "Recording process had to be force-killed. Video may be corrupted."
+    else
+        finalize_recording
+        local filename
+        filename=$(cat "$RECORDING_FILE" 2>/dev/null)
+        echo "$filename"
+        local preview="${filename%.mp4}-preview.png"
+
+        # Generate a preview thumbnail from the first frame
+        ffmpeg -y -i "$filename" -ss 00:00:00.1 -vframes 1 -q:v 2 "$preview" -loglevel quiet 2>/dev/null
+
+        notify "Screen recording saved" "Open with: mpv \"$filename\"" \
+            -t 10000 --image "${preview:-$filename}"
+
+        # The notification daemon loads the thumbnail into memory when the toast
+        # appears and never re-reads the file, so the preview only has to outlive
+        # that load -- not the toast. Clear it out of the recordings directory a
+        # moment later.
+        (
+            sleep 2
+            rm -f "$preview"
+        ) &
+    fi
+
+    rm -f "$RECORDING_FILE"
+}
+
+screenrecording_active() {
+    pgrep -f "^gpu-screen-recorder" >/dev/null
+}
+
+finalize_recording() {
+    local latest
+    latest=$(cat "$RECORDING_FILE" 2>/dev/null)
+    [[ -f $latest ]] || return
+
+    # Re-encode only when the first GOP contains discardable warmup packets - stream copy can't
+    # trim those (it rewinds to the keyframe). Clean recordings stay on the fast stream-copy path.
+    local video_codec=(-c:v copy)
+    if ffprobe -v error -select_streams v:0 -read_intervals %+0.2 -show_entries packet=flags -of csv=p=0 "$latest" 2>/dev/null | grep -q D; then
+        video_codec=(-c:v libx264 -preset veryfast -crf 20)
+    fi
+
+    # Trim the first frame, and normalize audio to -14 LUFS if present, in a single pass
+    local args=(-y -ss 0.1 -i "$latest" "${video_codec[@]}")
+    if ffprobe -v error -select_streams a -show_entries stream=codec_type -of csv=p=0 "$latest" 2>/dev/null | grep -q audio; then
+        # Hard-mute the first 400ms to drop the PipeWire capture-open pop (a near-clipping
+        # transient around 130-200ms that a gentle fade-in can't attenuate enough), then a
+        # 50ms fade avoids a click at the boundary before loudnorm normalizes the rest.
+        args+=(-af "volume=enable='lt(t,0.4)':volume=0,afade=t=in:st=0.4:d=0.05,loudnorm=I=-14:TP=-1.5:LRA=11")
+    fi
+
+    local processed="${latest%.mp4}-processed.mp4"
+    if ffmpeg "${args[@]}" "$processed" -loglevel quiet 2>/dev/null; then
+        mv "$processed" "$latest"
+    else
+        rm -f "$processed"
+    fi
+}
+
+if screenrecording_active; then
+    stop_screenrecording
+elif [[ $STOP_RECORDING == "true" ]]; then
+    exit 1
+else
+    start_screenrecording
+fi
