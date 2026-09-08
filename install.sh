@@ -15,6 +15,7 @@ NC='\033[0m' # No Color
 # Default values
 NIRI_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/niri"
 NOCTALIA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/noctalia"
+WIREPLUMBER_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wireplumber"
 THEME="tokyo-night"
 DRY_RUN=false
 FORCE=false
@@ -191,7 +192,18 @@ else
     success "Copied themed configs"
 fi
 
-# Step 6: Copy bin scripts
+# Step 6: Copy wireplumber config
+echo
+echo "Copying wireplumber configuration..."
+if [[ "$DRY_RUN" == true ]]; then
+    echo "   Would copy: config/wireplumber/wireplumber.conf.d/* → $WIREPLUMBER_CONFIG_DIR/wireplumber.conf.d/"
+else
+    mkdir -p "$WIREPLUMBER_CONFIG_DIR/wireplumber.conf.d"
+    cp "$REPO_ROOT/config/wireplumber/wireplumber.conf.d/"*.conf "$WIREPLUMBER_CONFIG_DIR/wireplumber.conf.d/" 2>/dev/null || true
+    success "Copied wireplumber config"
+fi
+
+# Step 7: Copy bin scripts
 echo
 echo "Installing bin scripts..."
 if [[ "$DRY_RUN" == true ]]; then
@@ -203,7 +215,7 @@ else
     success "Installed bin scripts"
 fi
 
-# Step 7: Copy themes directory (optional, for reference)
+# Step 8: Copy themes directory (optional, for reference)
 echo
 echo "Copying themes directory (optional reference)..."
 if [[ "$DRY_RUN" == true ]]; then
@@ -216,7 +228,7 @@ else
     fi
 fi
 
-# Step 8: Apply initial theme
+# Step 9: Apply initial theme
 echo
 echo "Applying initial theme: $THEME"
 if [[ "$DRY_RUN" == true ]]; then
@@ -230,7 +242,7 @@ else
     fi
 fi
 
-# Step 9: Copy scripts directory
+# Step 10: Copy scripts directory
 echo
 echo "Copying utility scripts..."
 if [[ "$DRY_RUN" == true ]]; then
