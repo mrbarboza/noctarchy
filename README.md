@@ -124,7 +124,8 @@ noctarchy/
 │       ├── shell.lock.toml  # Lock screen colors
 │       └── vscode.json      # VS Code theme reference
 ├── bin/
-│   └── theme-select         # Theme switching script
+│   ├── theme-select         # Theme switching script
+│   └── capture-screenshot   # Region/fullscreen screenshot with clipboard copy + notification
 ├── scripts/
 │   └── sync-themes.sh       # Theme sync utility
 ├── install.sh               # Installation script
@@ -154,6 +155,7 @@ Each theme's `colors.toml` in `themes/<name>/` defines:
 
 - [niri](https://github.com/YaLTeR/niri) window manager
 - Bash 4.0+ (for the installer)
+- `slurp`, `grim`, `wl-clipboard`, `jq` for `bin/capture-screenshot` (Mod+Print / Mod+Shift+Print); `libnotify`'s `notify-send` optional for the save notification
 
 ## License
 

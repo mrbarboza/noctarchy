@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#
+# Screenshot capture for niri: pick a region or the focused monitor with
+# slurp, save it as a PNG, copy it to the clipboard, and (best-effort) show a
+# notification with an action to open it in an editor/viewer.
+#
+# Usage: capture-screenshot [region|fullscreen]
+#   region      (default) freeform slurp selection
+#   fullscreen  the focused output, no interaction
+#
+# Only these two plain modes are supported - no window/smart snap-to-window
+# picking (that needs compositor IPC beyond niri's own) and no cursor-hiding
+# trick during capture (Hyprland-only, cosmetic gap only).
+set -euo pipefail
+
+MODE="${1:-region}"
+
+PICTURES_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
+OUTPUT_DIR="$PICTURES_DIR/Screenshots"
+mkdir -p "$OUTPUT_DIR"
+
+case "$MODE" in
+  region)
+    SELECTION="$(slurp)" || exit 0
+    ;;
+  fullscreen)
+    SELECTION="$(niri msg --json focused-output | jq -r '.logical | "\(.x),\(.y) \(.width)x\(.height)"')"
+    ;;
+  *)
+    echo "Usage: $(basename "$0") [region|fullscreen]" >&2
+    exit 1
+    ;;
+esac
+
+[[ -n "$SELECTION" ]] || exit 0
+
+FILENAME="screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png"
+FILEPATH="$OUTPUT_DIR/$FILENAME"
+
+grim -g "$SELECTION" "$FILEPATH"
+wl-copy --type image/png <"$FILEPATH"
+
+# Best-effort notification: the screenshot is already saved and on the
+# clipboard, so a missing notify-send or a daemon that ignores actions must
+# not be treated as a capture failure. Runs in the background so the
+# keybinding returns immediately instead of blocking on the notification.
+if command -v notify-send >/dev/null 2>&1; then
+  (
+    EDITOR_CMD="${NOCTARCHY_SCREENSHOT_EDITOR:-xdg-open}"
+    ACTION="$(notify-send --wait --app-name=noctarchy -i "$FILEPATH" \
+      -A "open=Open" "Screenshot saved" "Saved to clipboard and $FILEPATH" 2>/dev/null || true)"
+    [[ "$ACTION" == "open" ]] && "$EDITOR_CMD" "$FILEPATH"
+  ) &
+  disown
+fi

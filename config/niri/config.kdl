@@ -78,4 +78,8 @@ binds {
     Mod+Space   { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+D       { spawn-sh "noctalia msg notification-dnd-toggle"; }
     Mod+Shift+N { spawn-sh "noctalia msg notification-clear-active"; }
+    // Screenshot capture with clipboard copy and an editor-open notification
+    // action, on top of the native binds above (bin/capture-screenshot).
+    Mod+Print       { spawn-sh "$HOME/.config/niri/bin/capture-screenshot region"; }
+    Mod+Shift+Print { spawn-sh "$HOME/.config/niri/bin/capture-screenshot fullscreen"; }
 }
