@@ -90,6 +90,8 @@ start_screenrecording() {
 
     if kill -0 $pid 2>/dev/null; then
         echo "$filename" >"$RECORDING_FILE"
+    else
+        notify -u critical -t 5000 "Screen recording failed to start" "gpu-screen-recorder exited immediately (portal cancelled or capture error). Check $LOG_FILE."
     fi
 }
 
@@ -164,6 +166,15 @@ finalize_recording() {
         rm -f "$processed"
     fi
 }
+
+# Serialize the active-check-and-toggle below so two rapid keypresses before the
+# first gpu-screen-recorder process is visible to pgrep can't both read "inactive"
+# and each launch a recorder. Held until start/stop finishes, not just the check.
+LOCK_DIR="/tmp/capture-screenrecord.lock"
+if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+    exit 0
+fi
+trap 'rmdir "$LOCK_DIR" 2>/dev/null' EXIT
 
 if screenrecording_active; then
     stop_screenrecording
