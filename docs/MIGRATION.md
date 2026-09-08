@@ -16,6 +16,9 @@ Move from Omarchy (Hyprland + Quickshell) to Noctarchy (Niri + Noctalia) — **z
 These configs from Omarchy work as-is:
 
 - `config/kitty/` — Terminal
+- `config/alacritty/` — Terminal
+- `config/foot/` — Terminal
+- `config/ghostty/` — Terminal
 - `config/tmux/` — Terminal multiplexer
 - `config/git/` — Git config
 - `config/lazygit/` — Git TUI
@@ -93,8 +96,11 @@ cd noctarchy
 cp -r config/niri ~/.config/niri
 cp -r config/noctalia ~/.config/noctalia
 
-# Copy apps (kitty, tmux, etc.)
+# Copy apps (kitty, alacritty, foot, ghostty, tmux, etc.)
 cp -r config/kitty ~/.config/kitty
+cp -r config/alacritty ~/.config/alacritty
+cp -r config/foot ~/.config/foot
+cp -r config/ghostty ~/.config/ghostty
 cp -r config/tmux ~/.config/tmux
 cp -r config/git ~/.config/git
 cp -r config/lazygit ~/.config/lazygit
