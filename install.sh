@@ -298,9 +298,13 @@ else
     success "Installed fcitx5 config"
 
     if command -v fcitx5 &> /dev/null; then
-        systemctl --user daemon-reload
-        systemctl --user enable --now noctarchy-fcitx5.service
-        success "Enabled noctarchy-fcitx5.service"
+        if systemctl --user daemon-reload && systemctl --user enable --now noctarchy-fcitx5.service; then
+            success "Enabled noctarchy-fcitx5.service"
+        else
+            warn "fcitx5 found but no user systemd session reachable - config installed but left inactive"
+            echo "   Once a user session is available, run:"
+            echo "   systemctl --user enable --now noctarchy-fcitx5.service"
+        fi
     else
         warn "fcitx5 not found in PATH - config installed but left inactive"
         echo "   Install fcitx5 (and fcitx5-gtk/fcitx5-qt for app integration), then run:"
