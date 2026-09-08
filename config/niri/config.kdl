@@ -71,4 +71,11 @@ binds {
     Print       { screenshot-screen; }
     Ctrl+Print  { screenshot; }
     Alt+Print   { screenshot-window; }
+
+    // Noctalia shell IPC - bar/panel/notification control
+    Mod+Shift+B { spawn-sh "noctalia msg bar-toggle"; }
+    Mod+N       { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Space   { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+D       { spawn-sh "noctalia msg notification-dnd-toggle"; }
+    Mod+Shift+N { spawn-sh "noctalia msg notification-clear-active"; }
 }
