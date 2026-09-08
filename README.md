@@ -158,6 +158,9 @@ Each theme's `colors.toml` in `themes/<name>/` defines:
 - [niri](https://github.com/YaLTeR/niri) window manager
 - Bash 4.0+ (for the installer)
 - `slurp`, `grim`, `wl-clipboard`, `jq` for `bin/capture-screenshot` (Mod+Print / Mod+Shift+Print); `libnotify`'s `notify-send` optional for the save notification
+- `slurp`, `grim`, `wl-clipboard`, `libnotify` (region capture: `capture-qr`, `capture-text`)
+- `zbarimg` (QR decoding for `capture-qr`)
+- `tesseract` (OCR for `capture-text`)
 
 ## License
 
