@@ -59,7 +59,7 @@ window_and_monitor_rects() {
     ($ox + .layout.tile_pos_in_workspace_view[0] + .layout.window_offset_in_tile[0]) as $x |
     ($oy + .layout.tile_pos_in_workspace_view[1] + .layout.window_offset_in_tile[1]) as $y |
     "\($x | floor),\($y | floor) \(.layout.window_size[0])x\(.layout.window_size[1])"
-  ' | sort -u
+  ' | awk '!seen[$0]++'
 
   focused_output_rect
 }
@@ -82,14 +82,22 @@ case "$MODE" in
       click_x=${BASH_REMATCH[1]}
       click_y=${BASH_REMATCH[2]}
 
+      best_area=-1
       while IFS= read -r rect; do
         [[ $rect =~ ^(-?[0-9]+),(-?[0-9]+)[[:space:]]([0-9]+)x([0-9]+)$ ]] || continue
         rect_x=${BASH_REMATCH[1]} rect_y=${BASH_REMATCH[2]}
         rect_w=${BASH_REMATCH[3]} rect_h=${BASH_REMATCH[4]}
 
         if ((click_x >= rect_x && click_x < rect_x + rect_w && click_y >= rect_y && click_y < rect_y + rect_h)); then
-          SELECTION="${rect_x},${rect_y} ${rect_w}x${rect_h}"
-          break
+          # niri's window list carries no stacking-order signal, so among
+          # overlapping matches prefer the smallest area: floating windows
+          # (typically smaller) are more likely the visually topmost one
+          # the click actually landed on than the tiled window behind them.
+          area=$((rect_w * rect_h))
+          if ((best_area == -1 || area < best_area)); then
+            best_area=$area
+            SELECTION="${rect_x},${rect_y} ${rect_w}x${rect_h}"
+          fi
         fi
       done <<<"$RECTS"
     fi
