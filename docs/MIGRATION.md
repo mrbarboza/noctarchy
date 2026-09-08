@@ -62,9 +62,10 @@ Replace HEY shortcuts:
 // bind "Mod+Shift+E" { spawn "hey-electron"; }
 // bind "Mod+Shift+C" { spawn "hey-calendar"; }
 
-// ✅ Noctarchy (generic)
-bind "Mod+Shift+E" { spawn "firefox"; }
-bind "Mod+Shift+C" { spawn "kitty -e btop"; }
+// ✅ Noctarchy (generic) — niri binds have no "bind" keyword and no
+// quotes around the key combo; see config/niri/config.kdl for the full set.
+Mod+Shift+E { spawn "firefox"; }
+Mod+Shift+C { spawn "kitty" "-e" "btop"; }
 ```
 
 ## Step-by-step migration
