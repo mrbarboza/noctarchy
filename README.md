@@ -89,6 +89,10 @@ cp -r themes ~/.config/niri/
 cp scripts/* ~/.config/niri/scripts/
 chmod +x ~/.config/niri/scripts/*
 
+# Copy wireplumber config
+mkdir -p ~/.config/wireplumber/wireplumber.conf.d
+cp config/wireplumber/wireplumber.conf.d/*.conf ~/.config/wireplumber/wireplumber.conf.d/
+
 # Apply initial theme
 ~/.config/niri/bin/theme-select tokyo-night
 ```
@@ -100,10 +104,12 @@ noctarchy/
 ├── config/
 │   ├── niri/
 │   │   └── config.kdl       # niri config - installs to ~/.config/niri/
-│   └── noctalia/
-│       ├── config.toml      # Noctalia config - installs to ~/.config/noctalia/
-│       ├── theme.toml       # Default theme setting
-│       └── themed/          # Pre-generated theme configs
+│   ├── noctalia/
+│   │   ├── config.toml      # Noctalia config - installs to ~/.config/noctalia/
+│   │   ├── theme.toml       # Default theme setting
+│   │   └── themed/          # Pre-generated theme configs
+│   └── wireplumber/
+│       └── wireplumber.conf.d/  # WirePlumber config - installs to ~/.config/wireplumber/
 ├── themes/
 │   └── <theme-name>/
 │       ├── colors.toml      # Full color palette
