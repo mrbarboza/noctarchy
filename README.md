@@ -128,6 +128,11 @@ noctarchy/
 │   ├── capture-screenshot   # Region/fullscreen/window-snap/keyboard-pick screenshot with clipboard copy + notification
 │   ├── capture-qr           # Decode a QR code from a screen region
 │   └── capture-text         # Extract text from a screen region (OCR)
+│   ├── theme-select              # Theme switching script
+│   ├── capture-screenshot        # Region/fullscreen screenshot with clipboard copy + notification
+│   ├── capture-qr                # Decode a QR code from a screen region
+│   ├── capture-text              # Extract text from a screen region (OCR)
+│   └── capture-screenrecording   # Screen recording start/stop (Mod+Alt+Print)
 ├── scripts/
 │   └── sync-themes.sh       # Theme sync utility
 ├── install.sh               # Installation script
@@ -158,9 +163,11 @@ Each theme's `colors.toml` in `themes/<name>/` defines:
 - [niri](https://github.com/YaLTeR/niri) window manager
 - Bash 4.0+ (for the installer)
 - `slurp`, `grim`, `wl-clipboard`, `jq` for `bin/capture-screenshot` (Mod+Print region, Mod+Shift+Print fullscreen, Mod+Alt+Print window/monitor snap, Mod+Ctrl+Print freeform-with-snap, Mod+Ctrl+Shift+Print keyboard pick); `fuzzel` additionally needed for the keyboard pick mode; `libnotify`'s `notify-send` optional for the save notification
+- `slurp`, `grim`, `wl-clipboard`, `jq` for `bin/capture-screenshot` (Mod+Print / Mod+Shift+Print); `libnotify`'s `notify-send` optional for the save notification
 - `slurp`, `grim`, `wl-clipboard`, `libnotify` (region capture: `capture-qr`, `capture-text`)
 - `zbarimg` (QR decoding for `capture-qr`)
 - `tesseract` (OCR for `capture-text`)
+- `gpu-screen-recorder` and `ffmpeg` (optional, only needed for the screen recording keybind - Mod+Alt+Print)
 
 ## License
 

@@ -72,6 +72,12 @@ binds {
     Ctrl+Print  { screenshot; }
     Alt+Print   { screenshot-window; }
 
+    // Noctalia shell IPC - bar/panel/notification control
+    Mod+Shift+B { spawn-sh "noctalia msg bar-toggle"; }
+    Mod+N       { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Space   { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+D       { spawn-sh "noctalia msg notification-dnd-toggle"; }
+    Mod+Shift+N { spawn-sh "noctalia msg notification-clear-active"; }
     // Screenshot capture with clipboard copy and an editor-open notification
     // action, on top of the native binds above (bin/capture-screenshot).
     // "windows"/"smart" snap the slurp highlight to a window or monitor
@@ -87,4 +93,8 @@ binds {
     // Capture helpers - region select, then decode/OCR
     Mod+Shift+Q hotkey-overlay-title="Decode a QR code from a screen region" { spawn "capture-qr"; }
     Mod+Shift+T hotkey-overlay-title="Extract text from a screen region (OCR)" { spawn "capture-text"; }
+
+    // Screen recording (start/stop toggle) - portal capture picker lets you
+    // choose monitor/window/region
+    Mod+Alt+Print { spawn-sh "$HOME/.config/niri/bin/capture-screenrecording --with-desktop-audio"; }
 }
