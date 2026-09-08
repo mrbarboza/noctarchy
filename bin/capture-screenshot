@@ -47,7 +47,7 @@ wl-copy --type image/png <"$FILEPATH"
 if command -v notify-send >/dev/null 2>&1; then
   (
     EDITOR_CMD="${NOCTARCHY_SCREENSHOT_EDITOR:-xdg-open}"
-    ACTION="$(notify-send --app-name=noctarchy -i "$FILEPATH" \
+    ACTION="$(notify-send --wait --app-name=noctarchy -i "$FILEPATH" \
       -A "open=Open" "Screenshot saved" "Saved to clipboard and $FILEPATH" 2>/dev/null || true)"
     [[ "$ACTION" == "open" ]] && "$EDITOR_CMD" "$FILEPATH"
   ) &
