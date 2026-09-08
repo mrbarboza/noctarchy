@@ -10,7 +10,7 @@ SELECTION=$(slurp 2>/dev/null)
 
 # Decode QR codes only. Leaving other symbologies enabled lets dense screen
 # content false-positive as an EAN or Code 39 barcode and take over the clipboard.
-RESULT=$(grim -g "$SELECTION" - | zbarimg -q --raw -Sdisable -Sqrcode.enable - 2>/dev/null)
+RESULT=$(grim -g "$SELECTION" - | zbarimg -q --raw -Sdisable -Sqrcode.enable - 2>/dev/null) || true
 
 if [[ -z $RESULT ]]; then
   notify-send -u critical "No QR code found" "Select a region containing a QR code"
