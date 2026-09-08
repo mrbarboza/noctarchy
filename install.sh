@@ -119,6 +119,16 @@ if ! command -v niri &> /dev/null; then
     echo
 fi
 
+# Step 1b: Check for screen recording runtime deps (optional feature)
+info "Checking for screen recording dependencies..."
+for dep in gpu-screen-recorder ffmpeg; do
+    if ! command -v "$dep" &> /dev/null; then
+        warn "$dep not found in PATH"
+        echo "   Install it to use the screen recording keybind (Mod+Alt+Print)"
+    fi
+done
+echo
+
 # Step 2: Create config directory
 info "Config directory: $NIRI_CONFIG_DIR"
 if [[ ! -d "$NIRI_CONFIG_DIR" ]]; then
