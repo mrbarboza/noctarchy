@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euo pipefail
+
+# Extract text from a screen region via OCR.
+# Uses slurp (Wayland-generic region select) + grim + tesseract, no compositor-specific freeze step.
+
+SELECTION=$(slurp 2>/dev/null)
+
+[[ -z $SELECTION ]] && exit 0
+
+TEXT=$(grim -g "$SELECTION" - | tesseract stdin stdout --oem 1 --psm 6 -l "${NOCTARCHY_OCR_LANGS:-eng}" --dpi 300 -c preserve_interword_spaces=1 2>/dev/null) || exit 1
+
+[[ -z $TEXT ]] && exit 1
+
+printf "%s" "$TEXT" | wl-copy
+notify-send "Copied text from selection to clipboard"
