@@ -2,7 +2,7 @@
 # Zero DHH/HEY references
 
 # Dynamic theme colors
-config-file = ?"catppuccin-mocha.conf"
+config-file = ?catppuccin-mocha.conf
 
 # Font
 font-family = "monospace"
