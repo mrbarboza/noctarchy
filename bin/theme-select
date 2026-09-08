@@ -1,41 +1,39 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-THEME="$1"
-REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-THEME_DIR="$REPO_ROOT/themes/$THEME"
-NOCTALIA_THEME="$REPO_ROOT/config/noctalia/theme.toml"
-NIRI_COLORS="$REPO_ROOT/config/niri/theme-colors.kdl"
-COLORS_TOML="$THEME_DIR/colors.toml"
+THEME="${1:-}"
 
 if [[ -z "$THEME" ]]; then
   echo "Usage: theme-select <theme-name>"
-  echo "Available themes:"
-  ls -1 "$REPO_ROOT/themes"
+  REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+  if [[ -d "$REPO_ROOT/themes" ]]; then
+    echo "Available themes:"
+    ls -1 "$REPO_ROOT/themes"
+  fi
   exit 1
 fi
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+THEME_DIR="$REPO_ROOT/themes/$THEME"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+NOCTALIA_THEME="$CONFIG_HOME/noctalia/theme.toml"
+COLORS_TOML="$THEME_DIR/colors.toml"
 
 if [[ ! -d "$THEME_DIR" ]]; then
   echo "Theme '$THEME' not found in $THEME_DIR"
   exit 1
 fi
 
+if [[ ! -f "$COLORS_TOML" ]]; then
+  echo "Warning: No colors.toml for $THEME"
+  exit 1
+fi
+
+mkdir -p "$(dirname "$NOCTALIA_THEME")"
 cat > "$NOCTALIA_THEME" <<EOF
 # Selected theme
 name = "$THEME"
 EOF
 
-if [[ -f "$COLORS_TOML" ]]; then
-  echo "// Auto-generated: themes/$THEME/colors.toml" > "$NIRI_COLORS"
-  while IFS='=' read -r key value; do
-    [[ "$key" =~ ^[[:space:]]*# ]] && continue
-    [[ -z "$key" ]] && continue
-    key=$(echo "$key" | xargs)
-    value=$(echo "$value" | sed 's/"//g' | xargs)
-    [[ "$key" =~ ^\[ ]] && continue
-    echo "color $key \"$value\"" >> "$NIRI_COLORS"
-  done < "$COLORS_TOML"
-  echo "Theme: $THEME"
-else
-  echo "Warning: No colors.toml for $THEME"
-fi
+echo "Theme: $THEME"
+echo "Niri colors are applied via Noctalia's own builtin niri template (see docs/THEMES.md)."
