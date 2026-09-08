@@ -125,7 +125,9 @@ noctarchy/
 │       └── vscode.json      # VS Code theme reference
 ├── bin/
 │   ├── theme-select         # Theme switching script
-│   └── capture-screenshot   # Region/fullscreen screenshot with clipboard copy + notification
+│   ├── capture-screenshot   # Region/fullscreen screenshot with clipboard copy + notification
+│   ├── capture-qr           # Decode a QR code from a screen region
+│   └── capture-text         # Extract text from a screen region (OCR)
 ├── scripts/
 │   └── sync-themes.sh       # Theme sync utility
 ├── install.sh               # Installation script
