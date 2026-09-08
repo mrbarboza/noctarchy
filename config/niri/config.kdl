@@ -80,8 +80,15 @@ binds {
     Mod+Shift+N { spawn-sh "noctalia msg notification-clear-active"; }
     // Screenshot capture with clipboard copy and an editor-open notification
     // action, on top of the native binds above (bin/capture-screenshot).
-    Mod+Print       { spawn-sh "$HOME/.config/niri/bin/capture-screenshot region"; }
-    Mod+Shift+Print { spawn-sh "$HOME/.config/niri/bin/capture-screenshot fullscreen"; }
+    // "windows"/"smart" snap the slurp highlight to a window or monitor
+    // rectangle on mouse hover; "pick" is a keyboard-only fuzzel dmenu list
+    // of windows, since niri has no cursor-warp IPC to drive slurp by
+    // keyboard the way Omarchy's Hyprland-only Tab-cycling trick does.
+    Mod+Print             { spawn-sh "$HOME/.config/niri/bin/capture-screenshot region"; }
+    Mod+Shift+Print       { spawn-sh "$HOME/.config/niri/bin/capture-screenshot fullscreen"; }
+    Mod+Alt+Print         { spawn-sh "$HOME/.config/niri/bin/capture-screenshot windows"; }
+    Mod+Ctrl+Print        { spawn-sh "$HOME/.config/niri/bin/capture-screenshot smart"; }
+    Mod+Ctrl+Shift+Print  { spawn-sh "$HOME/.config/niri/bin/capture-screenshot pick"; }
 
     // Capture helpers - region select, then decode/OCR
     Mod+Shift+Q hotkey-overlay-title="Decode a QR code from a screen region" { spawn "capture-qr"; }
