@@ -14,6 +14,7 @@ NC='\033[0m' # No Color
 
 # Default values
 NIRI_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/niri"
+NOCTALIA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/noctalia"
 THEME="tokyo-night"
 DRY_RUN=false
 FORCE=false
@@ -131,15 +132,15 @@ else
 fi
 
 # Step 3: Backup existing config (if any)
-if [[ -f "$NIRI_CONFIG_DIR/config.toml" ]]; then
+if [[ -f "$NOCTALIA_CONFIG_DIR/config.toml" ]]; then
     if [[ "$FORCE" == true ]]; then
         warn "Existing config.toml will be overwritten (--force)"
     else
         if [[ "$DRY_RUN" == true ]]; then
-            echo "   Would backup: $NIRI_CONFIG_DIR/config.toml"
+            echo "   Would backup: $NOCTALIA_CONFIG_DIR/config.toml"
         else
-            BACKUP_FILE="$NIRI_CONFIG_DIR/config.toml.backup.$(date +%Y%m%d%H%M%S)"
-            cp "$NIRI_CONFIG_DIR/config.toml" "$BACKUP_FILE"
+            BACKUP_FILE="$NOCTALIA_CONFIG_DIR/config.toml.backup.$(date +%Y%m%d%H%M%S)"
+            cp "$NOCTALIA_CONFIG_DIR/config.toml" "$BACKUP_FILE"
             success "Backed up existing config to: $BACKUP_FILE"
         fi
     fi
@@ -149,12 +150,18 @@ fi
 echo
 echo "Copying configuration files..."
 
+if [[ "$DRY_RUN" == true ]]; then
+    echo "   Would create: $NOCTALIA_CONFIG_DIR"
+else
+    mkdir -p "$NOCTALIA_CONFIG_DIR"
+fi
+
 # Copy main config
 if [[ "$DRY_RUN" == true ]]; then
-    echo "   Would copy: config/noctalia/config.toml → $NIRI_CONFIG_DIR/config.toml"
+    echo "   Would copy: config/noctalia/config.toml → $NOCTALIA_CONFIG_DIR/config.toml"
 else
-    if [[ "$FORCE" == true ]] || [[ ! -f "$NIRI_CONFIG_DIR/config.toml" ]]; then
-        cp "$REPO_ROOT/config/noctalia/config.toml" "$NIRI_CONFIG_DIR/config.toml"
+    if [[ "$FORCE" == true ]] || [[ ! -f "$NOCTALIA_CONFIG_DIR/config.toml" ]]; then
+        cp "$REPO_ROOT/config/noctalia/config.toml" "$NOCTALIA_CONFIG_DIR/config.toml"
         success "Copied config.toml"
     else
         warn "config.toml already exists (use --force to overwrite)"
@@ -163,10 +170,10 @@ fi
 
 # Copy theme config
 if [[ "$DRY_RUN" == true ]]; then
-    echo "   Would copy: config/noctalia/theme.toml → $NIRI_CONFIG_DIR/theme.toml"
+    echo "   Would copy: config/noctalia/theme.toml → $NOCTALIA_CONFIG_DIR/theme.toml"
 else
-    if [[ "$FORCE" == true ]] || [[ ! -f "$NIRI_CONFIG_DIR/theme.toml" ]]; then
-        cp "$REPO_ROOT/config/noctalia/theme.toml" "$NIRI_CONFIG_DIR/theme.toml"
+    if [[ "$FORCE" == true ]] || [[ ! -f "$NOCTALIA_CONFIG_DIR/theme.toml" ]]; then
+        cp "$REPO_ROOT/config/noctalia/theme.toml" "$NOCTALIA_CONFIG_DIR/theme.toml"
         success "Copied theme.toml"
     else
         warn "theme.toml already exists (use --force to overwrite)"
@@ -177,10 +184,10 @@ fi
 echo
 echo "Copying theme configurations..."
 if [[ "$DRY_RUN" == true ]]; then
-    echo "   Would copy: config/noctalia/themed/* → $NIRI_CONFIG_DIR/themed/"
+    echo "   Would copy: config/noctalia/themed/* → $NOCTALIA_CONFIG_DIR/themed/"
 else
-    mkdir -p "$NIRI_CONFIG_DIR/themed"
-    cp "$REPO_ROOT/config/noctalia/themed/"*.toml "$NIRI_CONFIG_DIR/themed/" 2>/dev/null || true
+    mkdir -p "$NOCTALIA_CONFIG_DIR/themed"
+    cp "$REPO_ROOT/config/noctalia/themed/"*.toml "$NOCTALIA_CONFIG_DIR/themed/" 2>/dev/null || true
     success "Copied themed configs"
 fi
 
@@ -243,8 +250,9 @@ echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━
 success "Installation complete!"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo
-echo "Config directory: $NIRI_CONFIG_DIR"
-echo "Active theme:     $THEME"
+echo "Niri config directory:     $NIRI_CONFIG_DIR"
+echo "Noctalia config directory: $NOCTALIA_CONFIG_DIR"
+echo "Active theme:              $THEME"
 echo
 echo "Next steps:"
 echo "  1. Start niri: niri"

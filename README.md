@@ -9,7 +9,8 @@ A beautiful, themeable niri window manager configuration with 22 curated color s
 git clone https://github.com/mrbarboza/noctarchy.git
 cd noctarchy
 
-# Run the installer (installs to ~/.config/niri with tokyo-night theme)
+# Run the installer (installs niri files to ~/.config/niri and
+# Noctalia's own files to ~/.config/noctalia, with tokyo-night theme)
 ./install.sh
 
 # Or install with a different theme
@@ -68,10 +69,14 @@ ls ~/.config/niri/themes
 If you prefer manual setup:
 
 ```bash
-# Copy config files
-cp config/noctalia/config.toml ~/.config/niri/config.toml
-cp config/noctalia/theme.toml ~/.config/niri/theme.toml
-cp config/noctalia/themed/*.toml ~/.config/niri/themed/
+# Noctalia only ever reads ~/.config/noctalia/ - its files go there
+mkdir -p ~/.config/noctalia/themed
+cp config/noctalia/config.toml ~/.config/noctalia/config.toml
+cp config/noctalia/theme.toml ~/.config/noctalia/theme.toml
+cp config/noctalia/themed/*.toml ~/.config/noctalia/themed/
+
+# niri's own files go under ~/.config/niri/
+cp config/niri/config.kdl ~/.config/niri/config.kdl
 
 # Copy scripts
 cp bin/* ~/.config/niri/bin/
@@ -93,8 +98,10 @@ chmod +x ~/.config/niri/scripts/*
 ```
 noctarchy/
 ├── config/
+│   ├── niri/
+│   │   └── config.kdl       # niri config - installs to ~/.config/niri/
 │   └── noctalia/
-│       ├── config.toml      # Main niri config
+│       ├── config.toml      # Noctalia config - installs to ~/.config/noctalia/
 │       ├── theme.toml       # Default theme setting
 │       └── themed/          # Pre-generated theme configs
 ├── themes/
@@ -117,7 +124,7 @@ noctarchy/
 
 ### Default Theme
 
-Edit `~/.config/niri/theme.toml` to change the default:
+Edit `~/.config/noctalia/theme.toml` to change the default:
 
 ```toml
 # Default theme for Noctalia

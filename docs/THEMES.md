@@ -33,26 +33,27 @@ All themes ported from Omarchy — **zero DHH/37signals/HEY references**.
 
 ### Noctalia
 
-Edit `~/.config/noctalia/config.toml`:
+Noctalia only ever reads `~/.config/noctalia/`.
+Edit `~/.config/noctalia/theme.toml` to pick the active theme (written by `bin/theme-select`).
+
+Enable Noctalia's own builtin `niri` template so it generates correct niri color config for you,
+in `~/.config/noctalia/templates.toml`:
 
 ```toml
-[theme]
-name = "catppuccin"  # Change to your theme
+[theme.templates]
+enable_builtin_templates = true
+builtin_ids = ["niri", "gtk3", "gtk4", "qt", "kitty", "btop", "starship"]
 ```
+
+Noctalia's own `apply.sh` then owns `~/.config/niri/noctalia.kdl` and keeps the `include` line in
+`~/.config/niri/config.kdl` up to date; niri hot-reloads on file change, no manual reload needed.
 
 ### Niri
 
-Add to `~/.config/niri/config.kdl`:
-
-```kdl
-// Colors will be loaded from theme
-// For now, use blur + animation settings
-blur {
-    enabled true
-    radius 20
-    passes 3
-}
-```
+niri's own files live under `~/.config/niri/`.
+Do not hand-write `color` nodes at the top level of `config.kdl` - niri only nests colors under
+blocks like `layout { focus-ring { ... } border { ... } }`, which is exactly what Noctalia's
+builtin `niri` template above generates for you.
 
 ### Kitty
 

@@ -4,11 +4,16 @@
 [shell]
 niri_overview_type_to_launch_enabled = true
 
-[bar]
-enabled = true
+[bar.main]
 position = "top"
-height = 42
-margin = 0
+thickness = 42
+radius = 0
+margin_ends = 0
+margin_edge = 0
+padding = 0
+start = ["workspace"]
+center = ["clock"]
+end = ["tray", "network", "volume", "battery", "media", "clipboard"]
 
 [bar.workspace]
 show-all = false
@@ -50,8 +55,7 @@ position = "top-right"
 max-visible = 3
 history-size = 50
 
-[wallpaper]
-enabled = true
+[wallpaper.default]
 path = "/usr/share/backgrounds/default.jpg"
 
 [lockscreen]
