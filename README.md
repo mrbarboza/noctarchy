@@ -78,6 +78,9 @@ cp config/noctalia/themed/*.toml ~/.config/noctalia/themed/
 # niri's own files go under ~/.config/niri/
 cp config/niri/config.kdl ~/.config/niri/config.kdl
 
+# Chromium Wayland flags
+cp config/chromium-flags.conf ~/.config/chromium-flags.conf
+
 # Copy scripts
 cp bin/* ~/.config/niri/bin/
 chmod +x ~/.config/niri/bin/*
@@ -110,7 +113,8 @@ noctarchy/
 │   │   └── themed/          # Pre-generated theme configs
 │   ├── wireplumber/
 │   │   └── wireplumber.conf.d/  # WirePlumber config - installs to ~/.config/wireplumber/
-│   └── fcitx5/              # Input method config (inert unless fcitx5 is installed)
+│   ├── fcitx5/              # Input method config (inert unless fcitx5 is installed)
+│   └── chromium-flags.conf  # Chromium Wayland flags - installs to ~/.config/chromium-flags.conf
 ├── themes/
 │   └── <theme-name>/
 │       ├── colors.toml      # Full color palette
