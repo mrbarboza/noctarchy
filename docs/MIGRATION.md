@@ -61,8 +61,8 @@ Replace HEY shortcuts:
 
 // ✅ Noctarchy (generic) — niri binds have no "bind" keyword and no
 // quotes around the key combo; see config/niri/config.kdl for the full set.
-Mod+Shift+E { spawn "firefox"; }
-Mod+Shift+C { spawn "kitty" "-e" "btop"; }
+Mod+B { spawn "firefox"; }
+Mod+E { spawn "kitty" "-e" "nvim"; }
 ```
 
 ## Step-by-step migration

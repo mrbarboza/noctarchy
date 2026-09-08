@@ -27,7 +27,7 @@ binds {
     Mod+Up    { focus-window-up; }
     Mod+Down  { focus-window-down; }
 
-    // Move column across workspaces (numbered)
+    // Switch to workspace (numbered)
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
