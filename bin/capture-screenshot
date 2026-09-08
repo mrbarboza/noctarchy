@@ -1,16 +1,31 @@
 #!/usr/bin/env bash
 #
-# Screenshot capture for niri: pick a region or the focused monitor with
-# slurp, save it as a PNG, copy it to the clipboard, and (best-effort) show a
-# notification with an action to open it in an editor/viewer.
+# Screenshot capture for niri: pick a region, the focused monitor, a
+# window/monitor rectangle, or a window by keyboard, save it as a PNG, copy
+# it to the clipboard, and (best-effort) show a notification with an action
+# to open it in an editor/viewer.
 #
-# Usage: capture-screenshot [region|fullscreen]
+# Usage: capture-screenshot [region|fullscreen|windows|smart|pick]
 #   region      (default) freeform slurp selection
 #   fullscreen  the focused output, no interaction
+#   windows     slurp restricted to window/monitor rectangles (mouse hover
+#               snaps the highlight to whichever one it's over)
+#   smart       freeform slurp, but a bare click (area < 20px^2) snaps to the
+#               window/monitor rectangle it landed in
+#   pick        keyboard-driven: fuzzel dmenu list of window titles on the
+#               focused output's active workspace, Enter captures the choice
 #
-# Only these two plain modes are supported - no window/smart snap-to-window
-# picking (that needs compositor IPC beyond niri's own) and no cursor-hiding
-# trick during capture (Hyprland-only, cosmetic gap only).
+# Omarchy's window/smart modes are Hyprland-only IPC (hyprctl clients/monitors
+# for rects, hyprctl cursorpos + hyprctl eval for warping the cursor between
+# windows during slurp so Tab/arrow keys can cycle the highlight). niri has
+# no cursor-warp IPC at all, so that keyboard-cycling trick cannot be ported:
+# mouse hover already drives slurp's highlight with no compositor IPC needed,
+# which is why `windows`/`smart` below only need niri's own `niri msg --json`
+# output for rect enumeration. For a keyboard-only equivalent, `pick` sidesteps
+# slurp entirely and uses a fuzzel dmenu list instead (arrow keys/type-to-filter
+# + Enter) - the smallest reasonable niri-native substitute, not a port of the
+# cursor-warp mechanism itself. Also no cursor-hiding trick during capture
+# (Hyprland-only, cosmetic gap only).
 set -euo pipefail
 
 MODE="${1:-region}"
@@ -19,15 +34,96 @@ PICTURES_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
 OUTPUT_DIR="$PICTURES_DIR/Screenshots"
 mkdir -p "$OUTPUT_DIR"
 
+# Rect of the focused output in niri's logical-pixel coordinate space
+# (already accounts for scale/transform, unlike Hyprland's physical pixels).
+focused_output_rect() {
+  niri msg --json focused-output | jq -r '.logical | "\(.x),\(.y) \(.width)x\(.height)"'
+}
+
+# Absolute on-screen rects for every window on the focused output's active
+# workspace, one per line as "X,Y WxH", followed by the focused output's own
+# rect (so slurp/click-snap can also land on empty screen and select the
+# whole monitor). Windows without a resolvable on-screen position (not part
+# of the current workspace view) are skipped - there is no absolute-position
+# field for those in niri's IPC.
+window_and_monitor_rects() {
+  local output_json out_name ox oy ws_id
+  output_json="$(niri msg --json focused-output)"
+  out_name="$(jq -r '.name' <<<"$output_json")"
+  ox="$(jq -r '.logical.x' <<<"$output_json")"
+  oy="$(jq -r '.logical.y' <<<"$output_json")"
+  ws_id="$(niri msg --json workspaces | jq -r --arg o "$out_name" '.[] | select(.output == $o and .is_active) | .id')"
+
+  niri msg --json windows | jq -r --argjson ws "$ws_id" --argjson ox "$ox" --argjson oy "$oy" '
+    .[] | select(.workspace_id == $ws and .layout.tile_pos_in_workspace_view != null) |
+    ($ox + .layout.tile_pos_in_workspace_view[0] + .layout.window_offset_in_tile[0]) as $x |
+    ($oy + .layout.tile_pos_in_workspace_view[1] + .layout.window_offset_in_tile[1]) as $y |
+    "\($x | floor),\($y | floor) \(.layout.window_size[0])x\(.layout.window_size[1])"
+  ' | sort -u
+
+  focused_output_rect
+}
+
 case "$MODE" in
   region)
     SELECTION="$(slurp)" || exit 0
     ;;
   fullscreen)
-    SELECTION="$(niri msg --json focused-output | jq -r '.logical | "\(.x),\(.y) \(.width)x\(.height)"')"
+    SELECTION="$(focused_output_rect)"
+    ;;
+  windows)
+    SELECTION="$(window_and_monitor_rects | slurp -r)" || exit 0
+    ;;
+  smart)
+    RECTS="$(window_and_monitor_rects)"
+    SELECTION="$(slurp)" || exit 0
+
+    if [[ $SELECTION =~ ^(-?[0-9]+),(-?[0-9]+)[[:space:]]([0-9]+)x([0-9]+)$ ]] && ((BASH_REMATCH[3] * BASH_REMATCH[4] < 20)); then
+      click_x=${BASH_REMATCH[1]}
+      click_y=${BASH_REMATCH[2]}
+
+      while IFS= read -r rect; do
+        [[ $rect =~ ^(-?[0-9]+),(-?[0-9]+)[[:space:]]([0-9]+)x([0-9]+)$ ]] || continue
+        rect_x=${BASH_REMATCH[1]} rect_y=${BASH_REMATCH[2]}
+        rect_w=${BASH_REMATCH[3]} rect_h=${BASH_REMATCH[4]}
+
+        if ((click_x >= rect_x && click_x < rect_x + rect_w && click_y >= rect_y && click_y < rect_y + rect_h)); then
+          SELECTION="${rect_x},${rect_y} ${rect_w}x${rect_h}"
+          break
+        fi
+      done <<<"$RECTS"
+    fi
+    ;;
+  pick)
+    command -v fuzzel >/dev/null 2>&1 || { echo "pick mode needs fuzzel" >&2; exit 1; }
+
+    output_json="$(niri msg --json focused-output)"
+    out_name="$(jq -r '.name' <<<"$output_json")"
+    ox="$(jq -r '.logical.x' <<<"$output_json")"
+    oy="$(jq -r '.logical.y' <<<"$output_json")"
+    ws_id="$(niri msg --json workspaces | jq -r --arg o "$out_name" '.[] | select(.output == $o and .is_active) | .id')"
+
+    mapfile -t WINDOW_LINES < <(niri msg --json windows | jq -r --argjson ws "$ws_id" --argjson ox "$ox" --argjson oy "$oy" '
+      .[] | select(.workspace_id == $ws and .layout.tile_pos_in_workspace_view != null) |
+      ($ox + .layout.tile_pos_in_workspace_view[0] + .layout.window_offset_in_tile[0]) as $x |
+      ($oy + .layout.tile_pos_in_workspace_view[1] + .layout.window_offset_in_tile[1]) as $y |
+      "\(.app_id // "?"): \(.title // "(untitled)")\t\($x | floor),\($y | floor) \(.layout.window_size[0])x\(.layout.window_size[1])"
+    ')
+    [[ ${#WINDOW_LINES[@]} -gt 0 ]] || exit 0
+
+    CHOICE="$(printf '%s\n' "${WINDOW_LINES[@]}" | cut -f1 | fuzzel --dmenu --prompt "Screenshot window: ")" || exit 0
+    [[ -n "$CHOICE" ]] || exit 0
+
+    SELECTION=""
+    for line in "${WINDOW_LINES[@]}"; do
+      if [[ "${line%%$'\t'*}" == "$CHOICE" ]]; then
+        SELECTION="${line#*$'\t'}"
+        break
+      fi
+    done
     ;;
   *)
-    echo "Usage: $(basename "$0") [region|fullscreen]" >&2
+    echo "Usage: $(basename "$0") [region|fullscreen|windows|smart|pick]" >&2
     exit 1
     ;;
 esac
