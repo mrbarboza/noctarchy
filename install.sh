@@ -256,6 +256,58 @@ else
     fi
 fi
 
+# Step 10: Install fcitx5 input method config (inert unless fcitx5 is installed)
+echo
+echo "Installing fcitx5 input method config..."
+XDG_CONFIG_HOME_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+FCITX5_CONFIG_DIR="$XDG_CONFIG_HOME_DIR/fcitx5/conf"
+ENVIRONMENT_D_DIR="$XDG_CONFIG_HOME_DIR/environment.d"
+SYSTEMD_USER_DIR="$XDG_CONFIG_HOME_DIR/systemd/user"
+AUTOSTART_DIR="$XDG_CONFIG_HOME_DIR/autostart"
+
+if [[ "$DRY_RUN" == true ]]; then
+    echo "   Would copy: config/fcitx5/conf/*.conf → $FCITX5_CONFIG_DIR/"
+    echo "   Would copy: config/fcitx5/environment.d/10-noctarchy-fcitx.conf → $ENVIRONMENT_D_DIR/"
+    echo "   Would copy: config/fcitx5/systemd/noctarchy-fcitx5.service → $SYSTEMD_USER_DIR/"
+    echo "   Would copy: config/fcitx5/autostart/org.fcitx.Fcitx5.desktop → $AUTOSTART_DIR/"
+    echo "   Would copy: config/fcitx5/xcompose → $HOME/.XCompose"
+    echo "   Would enable (if fcitx5 is installed): systemctl --user enable --now noctarchy-fcitx5.service"
+else
+    mkdir -p "$FCITX5_CONFIG_DIR" "$ENVIRONMENT_D_DIR" "$SYSTEMD_USER_DIR" "$AUTOSTART_DIR"
+
+    if [[ "$FORCE" == true ]] || [[ ! -f "$FCITX5_CONFIG_DIR/xcb.conf" ]]; then
+        cp "$REPO_ROOT/config/fcitx5/conf/xcb.conf" "$FCITX5_CONFIG_DIR/xcb.conf"
+    fi
+    if [[ "$FORCE" == true ]] || [[ ! -f "$FCITX5_CONFIG_DIR/clipboard.conf" ]]; then
+        cp "$REPO_ROOT/config/fcitx5/conf/clipboard.conf" "$FCITX5_CONFIG_DIR/clipboard.conf"
+    fi
+    if [[ "$FORCE" == true ]] || [[ ! -f "$ENVIRONMENT_D_DIR/10-noctarchy-fcitx.conf" ]]; then
+        cp "$REPO_ROOT/config/fcitx5/environment.d/10-noctarchy-fcitx.conf" "$ENVIRONMENT_D_DIR/10-noctarchy-fcitx.conf"
+    fi
+    if [[ "$FORCE" == true ]] || [[ ! -f "$SYSTEMD_USER_DIR/noctarchy-fcitx5.service" ]]; then
+        cp "$REPO_ROOT/config/fcitx5/systemd/noctarchy-fcitx5.service" "$SYSTEMD_USER_DIR/noctarchy-fcitx5.service"
+    fi
+    if [[ "$FORCE" == true ]] || [[ ! -f "$AUTOSTART_DIR/org.fcitx.Fcitx5.desktop" ]]; then
+        cp "$REPO_ROOT/config/fcitx5/autostart/org.fcitx.Fcitx5.desktop" "$AUTOSTART_DIR/org.fcitx.Fcitx5.desktop"
+    fi
+    if [[ "$FORCE" == true ]] || [[ ! -f "$HOME/.XCompose" ]]; then
+        cp "$REPO_ROOT/config/fcitx5/xcompose" "$HOME/.XCompose"
+    else
+        warn "~/.XCompose already exists (use --force to overwrite)"
+    fi
+    success "Installed fcitx5 config"
+
+    if command -v fcitx5 &> /dev/null; then
+        systemctl --user daemon-reload
+        systemctl --user enable --now noctarchy-fcitx5.service
+        success "Enabled noctarchy-fcitx5.service"
+    else
+        warn "fcitx5 not found in PATH - config installed but left inactive"
+        echo "   Install fcitx5 (and fcitx5-gtk/fcitx5-qt for app integration), then run:"
+        echo "   systemctl --user enable --now noctarchy-fcitx5.service"
+    fi
+fi
+
 # Final summary
 echo
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
