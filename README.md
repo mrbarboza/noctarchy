@@ -100,6 +100,23 @@ cp config/wireplumber/wireplumber.conf.d/*.conf ~/.config/wireplumber/wireplumbe
 ~/.config/niri/bin/theme-select tokyo-night
 ```
 
+## Uninstall
+
+```bash
+# Preview what would be removed
+./uninstall.sh --dry-run
+
+# Remove everything install.sh put in place
+./uninstall.sh
+```
+
+`uninstall.sh` reverses `install.sh` step by step.
+It only removes a file whose content still matches the repo's shipped copy - a file you edited yourself is left in place and reported, unless you pass `-f`/`--force`.
+It never deletes `~/.config/niri` or `~/.config/noctalia` themselves except with `rmdir` once they are already empty, never touches packages (niri, noctalia, fcitx5, gpu-screen-recorder, ffmpeg - remove those yourself), and never touches extra wallpapers or themes you added.
+By default it restores the newest `~/.config/noctalia/config.toml.backup.*` left by `install.sh`; pass `--no-restore` to skip that.
+Without `-y`/`--yes` it asks for confirmation before removing anything.
+Run `./uninstall.sh --help` for the full option list.
+
 ## Project Structure
 
 ```
